@@ -1,0 +1,64 @@
+<div class="container">
+  <h1><i class="fa fa-shopping-cart"></i>&nbsp;Shopping Cart</h1>
+  <div class="table-responsive"> 
+    <table class="table table-striped">
+      <thead>
+        <th>Product Name</th>
+        <th>Unit Price</th>
+        <th>Quantity</th>
+        <th>Subtotal</th>
+        <th>Tax</th>
+        <th>Total</th>
+      </thead> 
+      <tbody>
+        <% @order.line_items.each do |item| %>
+          <tr> 
+            <td><%= item.product.product_name %></td>
+            <td><%= item.unit_price %></td>
+            <td>
+              <% if @order.status == "cart" %>
+                  <%= form_for 'item', :url => line_items_update_path(item_id: item.id), :method => 'put' do |f| %>
+                    <div class="field"> 
+                      <%= f.number_field :quantity, :value => item.quantity %>
+                      <%= submit_tag "Change" %>
+                    </div>
+                  <% end %>
+              <% else %>
+                <%= item.quantity %>
+              <% end %>
+              </td>
+            <td><%= (item.unit_price * item.quantity) %></td>
+            <td><%= ((item.unit_price * item.quantity) * (item.product.tax_rate / 100)) %></td>
+            <td><%= ((item.unit_price * item.quantity) + (item.unit_price * item.quantity) * (item.product.tax_rate / 100)) %></td>
+            <td>
+              <% if @order.status == "cart" %>
+                  <%= button_to "Delete", line_items_delete_path(:item_id => item.id), :class => "btn btn-danger btn-xs" %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <td colspan="2"></td>
+          <td class="text-right"><strong>Total</strong></td>
+          <td><strong><%= @order.subtotal %></strong></td>
+          <td><strong><%= @order.tax %></strong></td>
+          <td><strong><%= @order.total %></strong></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="row col-md-offset-10"> 
+    <div class="col-md-6"> 
+      <% if @order.status == "cart" %>
+        <%= button_to "Checkout", order_checkout_path(@order) %>
+      <% end %>
+    </div>
+    <div class="col-md-6"> 
+      <%= button_to "Cancel", order_cancel_path(@order) %>
+    </div>
+  </div>
+  <% if @order.status == "checkout" %>
+    <%= render 'form_edit_address_credit_card_details' %>
+  <% end %>
+</div>
