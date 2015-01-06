@@ -44,11 +44,11 @@ class Order < ActiveRecord::Base
   def checkout
     self.status = "checkout"
     self.save!
-    return self.id
+    return self
   end
 
   def cancel
     self.update_attributes(:status => 'cancelled')
-    self
+    return self
   end
 end

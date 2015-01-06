@@ -8,13 +8,11 @@ class Product < ActiveRecord::Base
   validates :thumburl, format: { with: URI::regexp(%w(http https)) }
 
   def add_to_cart(current_user, quantity)
-    # binding.pry
     order = Order.find_by(user_id: current_user.id, status: "cart")
-    order ||= Order.create(user_id: current_user.id)
+    order ||= Order.create(user_id: current_user.id, status: "cart")
 
-    if order
-      # binding.pry      
-      li = LineItem.create(product_id: id, quantity: quantity, order_id: order.id)      
+    if order     
+      li = LineItem.create(product_id: id, quantity: quantity, order_id: order.id)        
       return order
     end
     false

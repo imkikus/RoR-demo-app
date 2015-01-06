@@ -2,10 +2,10 @@ FactoryGirl.define do
   factory :category do
     name "Test Category"
     thumburl "http://www.example.com"
-    trait :category do
+    
+    trait :category_empty_info do
       name ""
-      thumburl "example.com"
+      thumburl ""
     end
   end
-
 end

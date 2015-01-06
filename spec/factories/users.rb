@@ -3,10 +3,9 @@ FactoryGirl.define do
     email "imkikus@gmail.com"
     password "password1"
 
-    trait :user do
+    trait :user_empty_info do
       email ""
       password ""
     end
   end
-
 end
