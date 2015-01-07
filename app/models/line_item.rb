@@ -17,12 +17,12 @@ class LineItem < ActiveRecord::Base
       # binding.pry
       self.tax = ((unit_price * quantity) * (product.tax_rate / 100))
       self.total = ((unit_price * quantity) + tax)
-      hello = "Hello World"
     end
   end
 
   def order_recalculate
     order.recalculate
+    # binding.pry
   end
 
   def update_quantity(quantity)
@@ -36,7 +36,9 @@ class LineItem < ActiveRecord::Base
   end
 
   def remove
+    binding.pry
     self.destroy
+    binding.pry
     order
   end
 end

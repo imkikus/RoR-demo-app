@@ -2,7 +2,9 @@ require 'rails_helper'
 
 RSpec.describe Order, :type => :model do
   let(:order) { FactoryGirl.create(:order) }
-  let(:line_item) { FactoryGirl.create(:line_item, order: order) }
+  let(:line_item1) { FactoryGirl.create(:line_item, order: order) }
+  let(:line_item2) { FactoryGirl.create(:line_item, order: order) }
+  let(:line_item3) { FactoryGirl.create(:line_item, order: order) }
 
   it "Status should be either Cart, Cancelled, Pending, Checkout" do
     expect(order.status).to match(/(cart|checkout|payment_complete|cancelled)/)
@@ -33,13 +35,22 @@ RSpec.describe Order, :type => :model do
     end
   end
 
-  it "results of subtotal, tax, total" do
-    binding.pry
-    order.line_items.push(line_item)
-    binding.pry
-    if order.line_items.count == 1
-      binding.pry
-      # order.subtotal = 
+  context "results of subtotal, tax, total" do
+    it "order having exactly one item" do
+      order.line_items.push(line_item1)
     end
-  end  
+
+    it "order having more than one item" do
+      order.line_items.push(line_item1)
+      order.line_items.push(line_item2)
+      order.line_items.push(line_item3)     
+    end    
+  end 
+
+  context "Order" do
+    it "cancelled correctly" do
+      order.cancel
+      expect(order.status).to match(/cancelled/)
+    end
+  end 
 end
