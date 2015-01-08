@@ -1,6 +1,4 @@
 class OrdersController < ApplicationController
-  def index
-  end
 
   def show
     @order = Order.find(params[:id])
@@ -18,12 +16,6 @@ class OrdersController < ApplicationController
     else
       render('new')
     end
-  end
-
-  def edit
-  end
-
-  def delete
   end
 
   def edit_details
