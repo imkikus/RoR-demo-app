@@ -1,24 +1,31 @@
-<p>
-  <strong>Product name:</strong>
-	<%= @product.product_name %>
-</p>
+<div class="container-fluid"> 
+  <p>
+    <strong>Product name:</strong>
+    <%= @product.product_name %>
+  </p>
 
-<p>
-  <strong>Description:</strong>
-	<%= @product.description %>
-</p>
+  <p>
+    <strong>Description:</strong>
+    <%= @product.description %>
+  </p>
 
-<p>
-  <strong>Price:</strong>
-	<%= @product.price %>
-</p>
+  <p> 
+    <strong>Product Image</strong>
+    <%= image_tag @product.product_image.url(:medium) %>
+  </p>
 
-<p>
-  <strong>Thumburl:</strong>
-	<%= @product.thumburl %>
-</p>
+  <p>
+    <strong>Price:</strong>
+    <%= @product.price %>
+  </p>
 
-<%= render 'form_addtocart', locals: {product: @product} %>
+  <p>
+    <strong>Thumburl:</strong>
+    <%= @product.thumburl %>
+  </p>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+  <%= render 'form_addtocart', locals: {product: @product} %>
+
+  <%= link_to 'Edit', edit_product_path(@product) %> |
+  <%= link_to 'Back', products_path %>
+</div>

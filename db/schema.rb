@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141223064041) do
+ActiveRecord::Schema.define(version: 20150109072031) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,10 @@ ActiveRecord::Schema.define(version: 20141223064041) do
     t.string   "thumburl"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "category_image_file_name"
+    t.string   "category_image_content_type"
+    t.integer  "category_image_file_size"
+    t.datetime "category_image_updated_at"
   end
 
   create_table "line_items", force: true do |t|
@@ -55,6 +59,10 @@ ActiveRecord::Schema.define(version: 20141223064041) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "tax_rate"
+    t.string   "product_image_file_name"
+    t.string   "product_image_content_type"
+    t.integer  "product_image_file_size"
+    t.datetime "product_image_updated_at"
   end
 
   create_table "users", force: true do |t|

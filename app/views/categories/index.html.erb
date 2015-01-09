@@ -4,6 +4,7 @@
       <div class="col-md-2">
         <h2>Categories</h2>
         <p>Explore our latest categories from around the world.</p>
+        <%= link_to 'New Category', new_category_path, :class => "btn btn-primary" %>
       </div>
       <div class="col-md-8">
         <% @categories.in_groups_of(3).each do |categories| %>
@@ -12,7 +13,7 @@
             <% categories.each do |category| %>
               <div class='col-md-4'>
                 <div class="thumbnail">
-                    <img src= <%= category.thumburl %> >
+                    <%= image_tag category.category_image.url(:thumb) %>
                     <div class="caption">
                       <span class="listing-title"><%= category.name %></span>
                       <span><%= link_to "Edit", edit_category_path(category.id) %></span>
@@ -52,5 +53,3 @@
   </tbody>
 </table> -->
 <br>
-
-<%= link_to 'New Category', new_category_path %>

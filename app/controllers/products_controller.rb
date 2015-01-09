@@ -44,7 +44,7 @@ class ProductsController < ApplicationController
   end
 
   def product_params
-    params.require(:product).permit(:product_name, :description, :price, :thumburl)
+    params.require(:product).permit(:product_name, :description, :category_id, :price, :thumburl, :tax_rate, :product_image)
   end
 
   def add_to_cart

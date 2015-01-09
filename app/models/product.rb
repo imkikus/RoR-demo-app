@@ -7,6 +7,9 @@ class Product < ActiveRecord::Base
   validates :tax_rate, numericality: { greater_than_or_equal_to: 0}
   validates :thumburl, format: { with: URI::regexp(%w(http https)) }
 
+  has_attached_file :product_image, :styles => { :medium => "300x300>", :thumb => "100x100>"}, :default_url => "/images/:style/no_image.png"
+  validates_attachment_content_type :product_image, :content_type => /\Aimage\/.*\Z/
+
   def add_to_cart(current_user, quantity)
     order = Order.find_by(user_id: current_user.id, status: "cart")
     order ||= Order.create(user_id: current_user.id, status: "cart")

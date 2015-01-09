@@ -1,25 +1,29 @@
-<h1>Listing products</h1>
-
-<% @products.in_groups_of(3).each do |products| %>
-  <% products.select! {|x| !x.nil?} %>
-  <div class='row'>
-    <% products.each do |product| %>
-      <div class='col-md-4'>
-        <div class="thumbnail">
-          <img src= <%= product.thumburl %> >
-          <div class="caption">
-            <span class="listing-title"><%= product.product_name %></span>
-            <span class="listing-desc"><%= product.description %></span>
-            <span class="listing-price"><%= number_to_currency(product.price) %></span>
-            <span><%= link_to "Edit", edit_product_path(product.id) %></span>
-            <span><%= link_to "Delete", products_delete_path(:id => product.id) %></span>
-          </div>
-          <%= render 'form_addtocart', locals: {product: product} %>
-        </div>
-      </div>
-    <% end %>
+<div class="container"> 
+  <div> 
+    <h1>Listing products</h1>
+    <%= link_to 'New Product', new_product_path, :class => "btn btn-primary"%>
   </div>
-<% end %>
-<br>
+  <br/>
+  <% @products.in_groups_of(3).each do |products| %>
+    <% products.select! {|x| !x.nil?} %>
+    <div class='row'>
+      <% products.each do |product| %>
+        <div class='col-md-4'>
+          <div class="thumbnail">
+            <%= image_tag product.product_image.url(:thumb) %>
+            <div class="caption">
+              <span class="listing-title"><%= product.product_name %></span>
+              <span class="listing-desc"><%= product.description %></span>
+              <span class="listing-price"><%= number_to_currency(product.price) %></span>
+              <span><%= link_to "Edit", edit_product_path(product.id) %></span>
+              <span><%= link_to "Delete", products_delete_path(:id => product.id) %></span>
+            </div>
+            <%= render 'form_addtocart', locals: {product: product} %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <br>
 
-<%= link_to 'New Product', new_product_path %>
+</div>
