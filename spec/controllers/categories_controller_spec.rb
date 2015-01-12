@@ -31,6 +31,7 @@ RSpec.describe CategoriesController, :type => :controller do
       category = Category.new
       get :new
       expect(assigns(:category).id).to eq(category.id)
+      # binding.pry
     end
   end
 
@@ -93,5 +94,26 @@ RSpec.describe CategoriesController, :type => :controller do
       expect(response).to redirect_to categories_path
       # binding.pry
     end
-  end  
+  end 
+
+  describe "Category" do
+    it "validates for the availability of an image" do
+      expect(Category).to have_attached_file(:category_image)
+    end
+    # it "validates the presence of attachment" do
+    #   expect(Category).to validate_attachment_presence(:category_image)
+    # end
+    it "validates for an attachment of image" do 
+      expect(Category).to validate_attachment_content_type(:category_image).
+        allowing('image/png', 'image/gif', 'image/jpg').
+        rejecting('text/plain', 'text/xml')
+    end
+
+    it "validates for the non-availability of the image" do
+      allow_any_instance_of(Category).to receive(:save).and_return(false)
+      post :create, {:category => { category_image: nil }}
+      expect(response).to render_template("new")
+      # binding.pry
+    end    
+  end   
 end

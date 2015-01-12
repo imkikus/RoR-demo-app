@@ -5,7 +5,7 @@ FactoryGirl.define do
     price 9.99
     thumburl "http://www.example.com"
     tax_rate 9.99
-    product_image File.new("#{Rails.root}/spec/fixtures/images/google.jpg")
+    product_image { File.new("#{Rails.root}/spec/fixtures/images/google.jpg") }
     association :category
 
     trait :product_empty_info do

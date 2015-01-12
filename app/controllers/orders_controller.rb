@@ -20,6 +20,7 @@ class OrdersController < ApplicationController
 
   def edit_details
     order = Order.find(params[:id]).address_credit_card_details(params)
+    binding.pry
     redirect_to order_path(order)
   end
 
@@ -37,6 +38,6 @@ class OrdersController < ApplicationController
   private
 
   def order_params
-    params.require(:order).permit(:status, :shipping_address)
+    params.require(:order).permit(:status, :shipping_address, :user_id)
   end
 end

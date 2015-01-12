@@ -9,6 +9,7 @@ class LineItemsController < ApplicationController
       puts "Line Item saved"
       redirect_to(:action => 'index')
     else
+      binding.pry
       render('new')
     end
   end
@@ -35,6 +36,6 @@ class LineItemsController < ApplicationController
   private
 
   def line_item_params
-    params.require(:line_item).permit(:unit_price, :quantity, :tax, :total)
+    params.require(:line_item).permit(:unit_price, :quantity, :tax, :total, :order_id, :product_id)
   end
 end

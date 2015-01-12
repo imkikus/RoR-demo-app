@@ -72,7 +72,7 @@ RSpec.describe ProductsController, :type => :controller do
     it "assigns the requested product as @product" do
       product = Product.create!(product_name: 'Test Product', description: "Brief description of the product", category_id: 1234, price: 9.99, tax_rate: 9.99, thumburl: 'http://www.laptop.com')
       get :edit, {:id => product.to_param}
-      assigns(:product).should eq(product)
+      expect(assigns(:product)).to eq(product)
       # binding.pry
     end
   end  
@@ -107,10 +107,26 @@ RSpec.describe ProductsController, :type => :controller do
   # end
 
   describe "Product" do
-    # binding.pry
     it "validates for the availability of an image" do
       expect(Product).to have_attached_file(:product_image)
     end
+    # it "validates the presence of attachment" do
+    #   expect(Product).to validate_attachment_presence(:product_image)
+    # end
+    it "validates for an attachment of image" do 
+      expect(Product).to validate_attachment_content_type(:product_image).
+        allowing('image/png', 'image/gif', 'image/jpg').
+        rejecting('text/plain', 'text/xml')
+    end
+
+    it "validates for the non-availability of the image" do
+      allow_any_instance_of(Product).to receive(:save).and_return(false)
+      post :create, {:product => { product_image: nil }}
+      expect(response).to render_template("new")
+      # product.should have(1).error_on(:product_image)
+      # binding.pry
+    end
+    # binding.pry
     # it { should validate_attachment_presence(:product_image) }
     # it "should be valid" do
     #   binding.pry
