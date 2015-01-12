@@ -1,6 +1,6 @@
 <p>
   <strong>Product name:</strong>
-	<%= @product.product_name %>
+	<%= @product.name %>
 </p>
 
 <p>
@@ -11,11 +11,6 @@
 <p>
   <strong>Price:</strong>
 	<%= @product.price %>
-</p>
-
-<p>
-  <strong>Thumburl:</strong>
-	<%= @product.thumburl %>
 </p>
 
 <%= link_to 'Delete', @product, method: :delete %> |

@@ -37,28 +37,28 @@ RSpec.describe CategoriesController, :type => :controller do
 
   describe "POST create" do
     it "creates a new category" do
-      parameters = {category: {name: 'Laptop', thumburl: 'http://www.laptop.com'}}
+      parameters = {category: {name: 'Laptop', description: "Category created for the purpose of testing"}}
       # binding.pry
       expect {post :create, parameters}.to change(Category, :count).by(1)
       # binding.pry
     end
 
     it "assigns a newly created category as @category" do
-      post :create, {:category => {name: 'Laptop', thumburl: 'http://www.laptop.com'}}
+      post :create, {:category => {name: 'Laptop', description: "Category created for the purpose of testing"}}
       expect(assigns(:category)).to be_a(Category)
       # binding.pry
       expect(assigns(:category)).to be_persisted
     end
 
     it "redirects to the created category" do
-      post :create, {:category => {name: 'Laptop', thumburl: 'http://www.laptop.com'}}
+      post :create, {:category => {name: 'Laptop', description: "Category created for the purpose of testing"}}
       # binding.pry
       redirect_to categories_path
     end
 
     it "assigns a newly created but unsaved category as @category with invalid parameters" do
       allow_any_instance_of(Category).to receive(:save).and_return(false)
-      post :create, {:category => { "thumburl" => "www.laptop.com" }}
+      post :create, {:category => { "description" => "About laptop" }}
       expect(response).to render_template("new")
       # binding.pry
     end
@@ -66,7 +66,7 @@ RSpec.describe CategoriesController, :type => :controller do
 
   describe "GET edit" do
     it "assigns the requested category as @category" do
-      category = Category.create!(name: 'laptop', thumburl: 'http://www.laptop.com')
+      category = Category.create!(name: 'laptop', description: "Category created for the purpose of testing")
       get :edit, {:id => category.to_param}
       assigns(:category).should eq(category)
       # binding.pry
@@ -75,7 +75,7 @@ RSpec.describe CategoriesController, :type => :controller do
 
   describe "PUT update" do
     it "updates, assigns and redirects_to the requested category" do
-      category = Category.create!(name: 'laptop', thumburl: 'http://www.laptop.com')
+      category = Category.create!(name: 'laptop', description: "Category created for the purpose of testing")
       # expect_any_instance_of(Category).to receive(:update).with({ "name" => "kiran" })
       put :update, {:id => category.to_param, :category => { "name" => "kiran" }}
       assigns(:category).should eq(category)
@@ -86,7 +86,7 @@ RSpec.describe CategoriesController, :type => :controller do
 
   describe "DELETE destroy" do
     it "destroys the requested category" do
-      category = Category.create!(name: 'laptop', thumburl: 'http://www.laptop.com')
+      category = Category.create!(name: 'laptop', description: "Description of laptop")
       # binding.pry
       expect {
         delete :destroy, {:id => category.to_param}
@@ -98,20 +98,20 @@ RSpec.describe CategoriesController, :type => :controller do
 
   describe "Category" do
     it "validates for the availability of an image" do
-      expect(Category).to have_attached_file(:category_image)
+      expect(Category).to have_attached_file(:image)
     end
     # it "validates the presence of attachment" do
-    #   expect(Category).to validate_attachment_presence(:category_image)
+    #   expect(Category).to validate_attachment_presence(:image)
     # end
     it "validates for an attachment of image" do 
-      expect(Category).to validate_attachment_content_type(:category_image).
+      expect(Category).to validate_attachment_content_type(:image).
         allowing('image/png', 'image/gif', 'image/jpg').
         rejecting('text/plain', 'text/xml')
     end
 
     it "validates for the non-availability of the image" do
       allow_any_instance_of(Category).to receive(:save).and_return(false)
-      post :create, {:category => { category_image: nil }}
+      post :create, {:category => { image: nil }}
       expect(response).to render_template("new")
       # binding.pry
     end    

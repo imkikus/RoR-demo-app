@@ -4,15 +4,15 @@
   	<%= f.label :name%>
   	<%= f.text_field :name%>  	
   </div>
-  <div class="thumburl">
-		<%= f.label :thumburl %>
-		<%= f.url_field :thumburl %>		
+  <div class="description">
+		<%= f.label :description %>
+		<%= f.text_field :description %>		
   </div>
   <div class="category-image">
-    <%= f.label :category_image %>
-    <%= f.file_field :category_image, :class => "divider" %><br/> 
+    <%= f.label :image %>
+    <%= f.file_field :image, :class => "divider" %><br/> 
     <% if params[:action] == "edit" %>
-      <%= image_tag @category.category_image.url(:medium) %>
+      <%= image_tag @category.image.url(:medium) %>
       <p><%= check_box_tag("delete[#{@category.id}]",1) %>
       <span><strong>Delete image</strong></span></p>
     <% end %>       

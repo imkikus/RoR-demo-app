@@ -59,18 +59,18 @@ RSpec.describe OrdersController, :type => :controller do
 
   describe "POST edit details" do
     it "assigns the requested order as @order" do
-      # binding.pry
-      post :edit_details, id: order.id, :order => { billing_address: 'example', shipping_address: 'example', card_number: 123452334, expiry_date: 10/2020, cvv: 123}
+      binding.pry
+      post :edit_details, { id: order.id }, { :order => {user_id: user.id, billing_address: 'example', shipping_address: 'example', card_number: 123452334, expiry_date: 1020, cvv: 123}}
       # redirect_to order_path
-      expect(assigns(:order)).to eq(order)
       # binding.pry
+      expect(assigns(:order)).to eq(order)
     end
   end 
 
   describe "POST checkout" do
     it "changes the status to checkout" do
       post :checkout, id: order.id, :order => { status: "checkout" }
-      binding.pry
+      # binding.pry
       expect(response).to redirect_to order_path
     end
   end
@@ -78,7 +78,7 @@ RSpec.describe OrdersController, :type => :controller do
   describe "POST cancel" do
     it "changes the status to cancelled" do
       post :cancel, id: order.id, :order => { status: "cancelled" }
-      binding.pry
+      # binding.pry
       expect(response).to redirect_to order_path
     end
   end        

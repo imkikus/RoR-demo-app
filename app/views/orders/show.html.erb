@@ -13,7 +13,7 @@
       <tbody>
         <% @order.line_items.each do |item| %>
           <tr> 
-            <td><%= item.product.product_name %></td>
+            <td><%= item.product.name %></td>
             <td><%= item.unit_price %></td>
             <td>
               <% if @order.status == "cart" %>

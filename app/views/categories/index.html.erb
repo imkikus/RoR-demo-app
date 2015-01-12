@@ -13,7 +13,7 @@
             <% categories.each do |category| %>
               <div class='col-md-4'>
                 <div class="thumbnail">
-                    <%= image_tag category.category_image.url(:thumb) %>
+                    <%= image_tag category.image.url(:thumb) %>
                     <div class="caption">
                       <span class="listing-title"><%= category.name %></span>
                       <span><%= link_to "Edit", edit_category_path(category.id) %></span>
@@ -42,8 +42,8 @@
     <% @categories.each do |category| %>
       <tr>
         <td><%= category.name %></td>
-        <div class="thumbnail">
-           <img src= <%=category.thumburl %> >
+        <div class="description">
+           <img src= <%=category.description %> >
         <div>
         <td><%= link_to 'Show', category %></td>
         <td><%= link_to 'Edit', edit_category_path(category) %></td>

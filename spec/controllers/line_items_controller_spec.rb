@@ -47,11 +47,22 @@ RSpec.describe LineItemsController, :type => :controller do
 
   describe "GET edit" do
     it "assigns the requested line_item as @line_item" do
-      binding.pry
+      # binding.pry
       line_item = LineItem.create!(order_id: order.id, product_id: 1, unit_price: 20.0, quantity: 2, tax: 12.24, total: 44.89)
-      binding.pry
+      # binding.pry
       get :edit, {:id => line_item.to_param}
       expect(assigns(:line_item)).to eq(line_item)
     end
-  end   
+  end  
+
+  describe "PUT update" do
+    it "updates, assigns and redirects_to the requested line_item" do
+      # line_item = LineItem.create!(order_id: order.id, product_id: line_item.product.id, unit_price: 20.0, quantity: 2, tax: 12.24, total: 44.89)
+      binding.pry
+      # expect_any_instance_of(Category).to receive(:update).with({ "name" => "kiran" })
+      get :update, :id => line_item.id, :line_item => { "quantity" => "3" }
+      expect(assigns(:line_item)).to eq(line_item)
+      expect(response).to redirect_to line_item_path
+    end   
+  end    
 end

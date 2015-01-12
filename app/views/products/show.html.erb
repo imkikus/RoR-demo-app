@@ -1,7 +1,7 @@
 <div class="container-fluid"> 
   <p>
     <strong>Product name:</strong>
-    <%= @product.product_name %>
+    <%= @product.name %>
   </p>
 
   <p>
@@ -11,17 +11,12 @@
 
   <p> 
     <strong>Product Image</strong>
-    <%= image_tag @product.product_image.url(:medium) %>
+    <%= image_tag @product.image.url(:medium) %>
   </p>
 
   <p>
     <strong>Price:</strong>
     <%= @product.price %>
-  </p>
-
-  <p>
-    <strong>Thumburl:</strong>
-    <%= @product.thumburl %>
   </p>
 
   <%= render 'form_addtocart', locals: {product: @product} %>
