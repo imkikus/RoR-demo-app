@@ -34,8 +34,6 @@ RSpec.describe LineItem, :type => :model do
   end
 
   it "recalculate the order total on deleting the line item" do
-    binding.pry
     line_item.remove
-    binding.pry
   end
 end

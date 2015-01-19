@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   post 'orders/:id/cancel' => 'orders#cancel', :as => :order_cancel
   
   resources :line_items
-  get 'line_items/update' => 'line_items#update'
+  post 'line_items/update' => 'line_items#update'
   post 'line_items/:id/delete' => 'line_items#delete', :as => :line_items_delete
 
   # The priority is based upon order of creation: first created -> highest priority.

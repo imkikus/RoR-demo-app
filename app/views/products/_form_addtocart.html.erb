@@ -1,8 +1,10 @@
 <%= form_for(locals[:product], url: products_add_to_cart_path(locals[:product]), method: :post) do |f| %>
-  <div class="quantity">
-    <%= text_field :qty, :value %>
-  </div>  
-  <div class="actions">
-    <%= f.submit "Add to cart" %>
+  <div class="add-to-cart"> 
+    <span class="quantity">
+      <%= text_field :qty, :value, :placeholder => "Enter the quantity" %>
+    </span>  
+    <span class="actions">
+      <%= f.submit "Add to cart" %>
+    </span>
   </div>
 <% end %>

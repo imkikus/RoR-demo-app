@@ -1,20 +1,28 @@
 <%= form_for(@product) do |f| %>
 
-  <div class="product_name">
-		<%= f.label :product_name %><br>
-		<%= f.text_field :product_name %>
+  <div class="name">
+		<%= f.label :name %><br>
+		<%= f.text_field :name %>
   </div>
   <div class="description">
 		<%= f.label :description %><br>
 		<%= f.text_field :description %>
   </div>
+  <div class="category-id">
+    <%= f.collection_select(:category_id, Category.order("name"), :id, :name) %>
+  </div>  
+  <div class="image">
+    <%= f.label :image %>
+    <%= f.file_field :image, :class => "divider" %><br/>
+    <% if ( !@product.image.nil? and params[:action] == "edit") %>
+      <%= image_tag @product.image.url(:medium) %>
+      <p><%= check_box_tag("delete[#{@product.id}]",1) %>
+      <span><strong>Delete image</strong></span></p>
+    <% end %>       
+  </div> 
   <div class="price">
-		<%= f.label :price %><br>
+    <%= f.label :price %><br>
 		<%= f.text_field :price %>
-  </div>
-  <div class="thumburl">
-		<%= f.label :thumburl %><br>
-		<%= f.url_field :thumburl %>
   </div>
   <div class="tax-rate">
     <%= f.label :tax_rate %><br>

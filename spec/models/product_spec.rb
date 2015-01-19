@@ -8,7 +8,7 @@ RSpec.describe Product, :type => :model do
   let(:line_item) { FactoryGirl.create(:line_item, order: order) }
 
   it "Name should not be empty" do
-    expect(product.product_name).not_to be_empty
+    expect(product.name).not_to be_empty
   end
   
   it "Description should not be empty" do
@@ -19,8 +19,8 @@ RSpec.describe Product, :type => :model do
     expect(product.price).to be >= 0 
   end
 
-  it "Thumbnail URL should be valid" do
-    expect(product.thumburl).to match(/^http(s?)\W/)
+  it "Detailed description" do
+    expect(product.description).not_to be_empty
   end
 
   it "Tax rate should be a  positive floating point value" do
@@ -83,10 +83,14 @@ RSpec.describe Product, :type => :model do
   end
 
   it "adding the same item twice into the cart, line item quantity increases by 1" do
-    binding.pry
+    # binding.pry
     expect{ 
-      line_item.product_id == line_item.product[:id]
+      product.add_to_cart(current_user, 1) 
+      product.add_to_cart(current_user, 1) 
+      # line_item.product_id == line_item.product[:id]
+      # binding.pry
     }.to change(LineItem, :count).by(1)      
-    binding.pry
+    # binding.pry
+    expect(LineItem.first.quantity).to eq(2)
   end
 end

@@ -10,8 +10,10 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.create(category_params)
     if @category.save
+      flash[:notice] = "Category successfully created"
       redirect_to(:action => 'index')
     else
+      flash[:alert] = "Creation of category failed"
       render('new')
     end
   end
@@ -23,8 +25,16 @@ class CategoriesController < ApplicationController
   def update
     @category = Category.find(params[:id])    
     if @category.update_attributes(category_params)
+      # binding.pry
+      if params[:delete]
+        # binding.pry
+        @category.image = nil
+        @category.save
+      end
+      flash[:notice] = "Category successfully updated"
       redirect_to(:action => 'show', :id => @category.id)
     else
+      flash[:alert] = "Updating category failed"
       render('index')
     end
   end
@@ -36,16 +46,19 @@ class CategoriesController < ApplicationController
 
   def delete
     @category = Category.find(params[:id])
+    # binding.pry
   end
+
 
   def destroy
     Category.find(params[:id]).destroy
+    flash[:notice] = "Selected category successfully deleted"
     redirect_to(:action => 'index')
   end
 
   private
 
   def category_params
-    params.require(:category).permit(:name, :thumburl)
+    params.require(:category).permit(:name, :description, :image)
   end
 end

@@ -54,3 +54,6 @@ end
 
 #gem for factory girl rails
 gem 'factory_girl_rails'
+
+#gem required for the paperclip
+gem "paperclip", :git => "git://github.com/thoughtbot/paperclip.git"

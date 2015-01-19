@@ -8,8 +8,8 @@ RSpec.describe Category, :type => :model do
     expect(category.name).not_to be_empty
   end
 
-  it "Thumbnail URL should be valid" do
-    expect(category.thumburl).to match(/^http(s?)\W/)
+  it "Description should not be empty" do
+    expect(category.description).not_to be_empty
   end
 
   context "raising errors for NULL values" do

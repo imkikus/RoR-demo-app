@@ -1,11 +1,11 @@
 FactoryGirl.define do
   factory :category do
     name "Test Category"
-    thumburl "http://www.example.com"
+    description "Category created for the purpose of testing"
     
     trait :category_empty_info do
       name ""
-      thumburl ""
+      description ""
     end
   end
 end

@@ -11,32 +11,39 @@ class OrdersController < ApplicationController
   def create
     @order = Order.new(order_params)
     if @order.save
-      puts "Order saved"
+      flash[:notice] = "Order successfully created"
       redirect_to(:action => 'index')
     else
+      flash[:alert] = "Order creation failed"
       render('new')
     end
   end
 
   def edit_details
-    order = Order.find(params[:id]).address_credit_card_details(params)
-    redirect_to order_path(order)
+    if params[:id]
+      order = Order.find(params[:id]).address_credit_card_details(params)
+      flash[:notice] = "Address/Credit card details successfully updated"
+      redirect_to order_path(order)
+    else
+      binding.pry
+    end
   end
 
   def checkout
     order = Order.find(params[:id]).checkout
+    flash[:notice] = "Order status successfully updated as checkout"
     redirect_to order_path(order)
   end
 
   def cancel
     order = Order.find(params[:id]).cancel
-    flash[:notice] = "Order cancelled successfully!"
+    flash[:notice] = "Order status successfully updated as cancelled"
     redirect_to order_path(order)
   end
 
   private
 
   def order_params
-    params.require(:order).permit(:status, :shipping_address)
+    params.require(:order).permit(:status, :shipping_address, :user_id)
   end
 end
