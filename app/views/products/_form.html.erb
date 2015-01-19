@@ -12,9 +12,14 @@
     <%= f.collection_select(:category_id, Category.order("name"), :id, :name) %>
   </div>  
   <div class="image">
-		<%= f.label :image %><br>
-    <%= f.file_field :image %>
-  </div>
+    <%= f.label :image %>
+    <%= f.file_field :image, :class => "divider" %><br/>
+    <% if ( !@product.image.nil? and params[:action] == "edit") %>
+      <%= image_tag @product.image.url(:medium) %>
+      <p><%= check_box_tag("delete[#{@product.id}]",1) %>
+      <span><strong>Delete image</strong></span></p>
+    <% end %>       
+  </div> 
   <div class="price">
     <%= f.label :price %><br>
 		<%= f.text_field :price %>

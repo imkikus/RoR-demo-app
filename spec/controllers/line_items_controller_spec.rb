@@ -19,16 +19,13 @@ RSpec.describe LineItemsController, :type => :controller do
 
   describe "POST create" do
     it "creates a new line_item" do
-      # binding.pry
       parameters = {:line_item => {order_id: order.id, product_id: line_item.product.id, unit_price: 20.0, quantity: 2, tax: 12.24, total: 44.89}}
-      # binding.pry
       expect{post :create, parameters}.to change(LineItem, :count).by(1)
     end
 
     it "assigns a newly created line_item as @line_item" do
       post :create, {:line_item => {order_id: order.id, product_id: line_item.product.id, unit_price: 20.0, quantity: 2, tax: 12.24, total: 44.89}}
       expect(assigns(:line_item)).to be_a(LineItem)
-      # binding.pry
       expect(assigns(:line_item)).to be_persisted
     end 
 
@@ -41,28 +38,27 @@ RSpec.describe LineItemsController, :type => :controller do
       allow_any_instance_of(LineItem).to receive(:save).and_return(false)
       post :create, {:line_item => { "unit_price" => -9.99 }}
       expect(response).to render_template("new")
-      # binding.pry
     end             
   end
 
   describe "GET edit" do
     it "assigns the requested line_item as @line_item" do
-      # binding.pry
-      line_item = LineItem.create!(order_id: order.id, product_id: 1, unit_price: 20.0, quantity: 2, tax: 12.24, total: 44.89)
-      # binding.pry
       get :edit, {:id => line_item.to_param}
       expect(assigns(:line_item)).to eq(line_item)
     end
   end  
 
-  describe "PUT update" do
+  describe "POST update" do
     it "updates, assigns and redirects_to the requested line_item" do
-      # line_item = LineItem.create!(order_id: order.id, product_id: line_item.product.id, unit_price: 20.0, quantity: 2, tax: 12.24, total: 44.89)
-      binding.pry
-      # expect_any_instance_of(Category).to receive(:update).with({ "name" => "kiran" })
-      get :update, :id => line_item.id, :line_item => { "quantity" => "3" }
-      expect(assigns(:line_item)).to eq(line_item)
-      expect(response).to redirect_to line_item_path
+      post :update, :item_id => line_item.id, :item => { :quantity => "3" }
+      expect(response).to redirect_to order_path(order)
     end   
-  end    
+  end  
+
+  describe "POST delete" do
+    it "deletes, redirects_to the order path" do
+      post :delete, :id => line_item.id
+      expect(response).to redirect_to order_path(order)
+    end   
+  end     
 end

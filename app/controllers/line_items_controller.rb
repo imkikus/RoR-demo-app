@@ -10,18 +10,15 @@ class LineItemsController < ApplicationController
       redirect_to(:action => 'index')
     else
       flash[:alert] = "Line item creation failed"
-      # binding.pry
       render('new')
     end
   end
 
   def edit
-    # binding.pry
     @line_item = LineItem.find(params[:id])
   end
 
   def update
-    # binding.pry
     if order = LineItem.find(params[:item_id]).update_quantity(params[:item][:quantity].to_i)
       flash[:notice] = "Line item successfully updated"
       redirect_to order_path(order)
@@ -32,7 +29,7 @@ class LineItemsController < ApplicationController
   end
 
   def delete
-    order = LineItem.find(params[:item_id].to_i).remove
+    order = LineItem.find(params[:id].to_i).remove
     flash[:notice] = "Line item successfully deleted"
     redirect_to order_path(order)
   end

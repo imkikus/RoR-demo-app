@@ -16,26 +16,31 @@
     <%= image_tag @category.image.url(:medium) %>
   </p>
 
-  <h1>Listing products</h1>
-  <% @products.in_groups_of(3).each do |products| %>
-    <% products.select! {|x| !x.nil?} %>
-    <div class='row'>
-      <% products.each do |product| %>
-        <div class='col-md-4'>
-          <div class="thumbnail">
-            <%= image_tag product.image.url(:medium) %>
-            <div class="caption">
-              <span class="listing-title"><%= product.name %></span>
-              <span class="listing-desc"><%= product.description %></span>
-              <span class="listing-price"><%= number_to_currency(product.price) %></span>
-              <span><%= link_to "Edit", edit_product_path(product.id) %></span>
-              <span><%= link_to "Delete", products_delete_path(:id => product.id) %></span>
+  <%= link_to 'Edit', edit_category_path(@category) %> |
+  <%= link_to 'Back', categories_path %>  
+
+  <% if @products.any? %>
+    <h1>Listing products</h1>
+    <% @products.in_groups_of(3).each do |products| %>
+      <% products.select! {|x| !x.nil?} %>
+      <div class='row'>
+        <% products.each do |product| %>
+          <div class='col-md-4'>
+            <div class="thumbnail">
+              <%= image_tag product.image.url(:medium) %>
+              <div class="caption">
+                <span class="listing-title"><%= product.name %></span>
+                <span class="listing-desc"><%= product.description %></span>
+                <span class="listing-price"><%= number_to_currency(product.price) %></span>
+                <span><%= link_to "Edit", edit_product_path(product.id) %></span>
+                <span><%= link_to "Delete", products_delete_path(:id => product.id) %></span>
+              </div>
+              <%= render 'products/form_addtocart', locals: {product: product} %>
             </div>
-            <%= render 'products/form_addtocart', locals: {product: product} %>
           </div>
-        </div>
-      <% end %>
-    </div>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
   <br>
 

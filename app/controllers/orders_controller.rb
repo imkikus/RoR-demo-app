@@ -20,21 +20,24 @@ class OrdersController < ApplicationController
   end
 
   def edit_details
-    order = Order.find(params[:id]).address_credit_card_details(params)
-    # binding.pry
-    flash[:notice] = "Address/Credit card details successfully updated"
-    redirect_to order_path(order)
+    if params[:id]
+      order = Order.find(params[:id]).address_credit_card_details(params)
+      flash[:notice] = "Address/Credit card details successfully updated"
+      redirect_to order_path(order)
+    else
+      binding.pry
+    end
   end
 
   def checkout
     order = Order.find(params[:id]).checkout
-    flash[:notice] = "Order status successfully updated (checkout)"
+    flash[:notice] = "Order status successfully updated as checkout"
     redirect_to order_path(order)
   end
 
   def cancel
     order = Order.find(params[:id]).cancel
-    flash[:notice] = "Order status successfully updated (cancelled)"
+    flash[:notice] = "Order status successfully updated as cancelled"
     redirect_to order_path(order)
   end
 

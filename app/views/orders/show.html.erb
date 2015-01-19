@@ -32,7 +32,7 @@
             <td><%= ((item.unit_price * item.quantity) + (item.unit_price * item.quantity) * (item.product.tax_rate / 100)) %></td>
             <td>
               <% if @order.status == "cart" %>
-                  <%= button_to "Delete", line_items_delete_path(:item_id => item.id), :class => "btn btn-danger btn-xs" %>
+                <%= button_to "Delete", line_items_delete_path(item), :class => "btn btn-danger btn-xs" %>
               <% end %>
             </td>
           </tr>

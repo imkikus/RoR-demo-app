@@ -30,6 +30,11 @@ class ProductsController < ApplicationController
   def update
     @product = Product.find(params[:id])
     if @product.update_attributes(product_params)
+      if params[:delete]
+        # binding.pry
+        @product.image = nil
+        @product.save
+      end      
       flash[:notice] = "Product successfully updated"
       redirect_to(:action => 'show', :id => @product.id)
     else

@@ -85,8 +85,12 @@ RSpec.describe Product, :type => :model do
   it "adding the same item twice into the cart, line item quantity increases by 1" do
     # binding.pry
     expect{ 
-      line_item.product_id == line_item.product[:id]
+      product.add_to_cart(current_user, 1) 
+      product.add_to_cart(current_user, 1) 
+      # line_item.product_id == line_item.product[:id]
+      # binding.pry
     }.to change(LineItem, :count).by(1)      
     # binding.pry
+    expect(LineItem.first.quantity).to eq(2)
   end
 end

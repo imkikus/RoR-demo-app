@@ -9,12 +9,10 @@ class LineItem < ActiveRecord::Base
   after_destroy :order_recalculate
 
   def get_calculate_price
-    # binding.pry
     if product_id.nil?
       puts "No product exists with the id"
     else
       self.unit_price ||= product.price
-      # binding.pry
       self.tax = ((unit_price * quantity) * (product.tax_rate / 100))
       self.total = ((unit_price * quantity) + tax)
     end
@@ -22,11 +20,9 @@ class LineItem < ActiveRecord::Base
 
   def order_recalculate
     order.recalculate
-    # binding.pry
   end
 
   def update_quantity(quantity)
-    # binding.pry
     if order
       self.quantity = quantity
       self.save
@@ -36,9 +32,7 @@ class LineItem < ActiveRecord::Base
   end
 
   def remove
-    binding.pry
     self.destroy
-    binding.pry
     order
   end
 end
